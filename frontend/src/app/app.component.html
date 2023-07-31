@@ -1,0 +1,66 @@
+<div class="container p-2">
+    <div class="row my-2">
+        <div class="col-4 ms-auto">
+            <select name="user" [(ngModel)]="senderid" class="form-control" id="userid" (change)="selectuser($event)">
+              <option selected disabled > --select user--</option>
+            <option *ngFor="let user of users" [value]="user.userId" >{{user.userName}}</option>
+          </select>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-3">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+   search user
+  </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">select users</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <ng-container *ngFor="let user of users">
+                                    <div class="d-flex my-2" *ngIf="conversationexists(user.userId)==false ">
+                                        <li class="list-group-item col-9" aria-current="true">{{user.userName}}</li>
+                                        <button class="btn btn-info col-2 ms-1" (click)="addtoconv(user.userId)">Add</button>
+                                    </div>
+                                </ng-container>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-group my-2">
+                <li [ngClass]="receiverId==conv.userid?'list-group-item active':'list-group-item'" *ngFor="let conv of myConversions" (click)="dochat(conv)">{{conv.username}}</li>
+
+            </ul>
+
+        </div>
+        <div class="col-sm-7 chatwindow">
+
+            <div *ngFor="let chat of chatData" class="d-flex">
+                <div [ngClass]="chat.author==senderid?'float-end':'float-start'">
+                    <p class="text-muted">{{chat.name}}</p>
+                    <p> {{chat.message}} </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="offset-3 col-7 d-flex">
+            <input type="text" name="" [(ngModel)]="message" class="form-control col-7" id="">
+
+            <button class="btn btn-primary col-3" (click)="sendMessage()">
+        send
+      </button>
+        </div>
+    </div>
+</div>
